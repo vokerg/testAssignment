@@ -59,7 +59,7 @@ public class WordCounter {
 	private Supplier<Map<String, Integer>> parallelFileReader = () -> {
 		Path path = Paths.get(FILENAME);
 		try {
-			Files.readAllLines(path).parallelStream()
+			Files.lines(path).parallel()
 					.forEach(line -> Arrays.stream(line.toLowerCase().split(REGEX_SPLIT)).forEach(word -> {
 						if (!word.isEmpty()) {
 							synchronized (map) {
@@ -77,7 +77,7 @@ public class WordCounter {
 		Path path = Paths.get(FILENAME);
 		Map<String, Integer> wordMap = new HashMap<String, Integer>();
 		try {
-			Files.readAllLines(path).stream()
+			Files.lines(path)
 					.forEach(line -> Arrays.stream(line.toLowerCase().split(REGEX_SPLIT)).forEach(word -> {
 						if (!word.isEmpty()) {
 							wordMap.put(word, wordMap.containsKey(word) ? wordMap.get(word) + 1 : 1);
